@@ -27,10 +27,8 @@
 ;; (setq doom-theme 'doom-one)
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-theme 'humanoid-dark)
-(setq doom-theme 'doom-gruvbox)
-;; (setq doom-theme 'base16-default-dark)
-;; (setq doom-theme 'color-theme-sanityinc-tomorrow-day)
-;; (color-theme-sanityinc-tomorrow-night)
+;; (setq doom-theme 'base16-atelier-dune)
+(setq doom-theme 'base16-woodland)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -74,17 +72,38 @@
 ;; (setq doom-leader-alt-key "M-n"))
 (after! ivy
   (define-key ivy-minibuffer-map (kbd "TAB") 'ivy-partial-or-done))
+
 (map! :map emmet-mode-keymap
         "M-j" #'emmet-expand-line)
+
 (map! :map evil-window-map "," #'other-window )
 (map! :map evil-window-map "3" #'delete-other-windows)
 (map! :map evil-window-map "4" #'split-window-right)
-(map! :map evil-window-map "2" #'split-window-below)
 (map! :leader
       (:prefix-map ("o" . "open")
        :desc "Dired"              "d"  #'dired-jump))
 (map! :map evil-normal-state-map "u" 'undo-fu-only-undo)
 (map! :map evil-normal-state-map "C-r" 'undo-fu-only-redo)
+
+(after! web-mode
+  (setq web-mode-enable-auto-indentation nil))
+
+(add-hook 'vue-mode-hook #'eglot)
+
+(define-derived-mode genehack-vue-mode web-mode "ghVue"
+  "A major mode derived from web-mode, for editing .vue files with LSP support.")
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . genehack-vue-mode))
+(add-hook 'genehack-vue-mode-hook #'eglot-ensure)
+(after! eglot
+  (add-to-list 'eglot-server-programs '(genehack-vue-mode "vls")))
+;; (after! evil-mode
+;;   (defvar my/base16-colors base16-atelier-dune-colors)
+;;   (setq evil-emacs-state-cursor   `(,(plist-get my/base16-colors :base0D) box)
+;;         evil-insert-state-cursor  `(,(plist-get my/base16-colors :base0D) bar)
+;;         evil-motion-state-cursor  `(,(plist-get my/base16-colors :base0E) box)
+;;         evil-normal-state-cursor  `(,(plist-get my/base16-colors :base0B) box)
+;;         evil-replace-state-cursor `(,(plist-get my/base16-colors :base08) bar)
+;;         evil-visual-state-cursor  `(,(plist-get my/base16-colors :base09) box)))
 
 ;; (defun xah-unsplit-window-or-next-frame ()
 ;;   "Unsplit window. If current frame has only one window, switch to next frame.

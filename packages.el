@@ -48,5 +48,7 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
-;;(package! humanoid-themes)
+
+;; (package! xah-fly-keys)
+;; (package! humanoid-themes)
 (package! base16-theme)
