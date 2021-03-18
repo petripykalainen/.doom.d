@@ -88,14 +88,22 @@
 (after! web-mode
   (setq web-mode-enable-auto-indentation nil))
 
-(add-hook 'vue-mode-hook #'eglot)
+;; (add-hook 'vue-mode-hook #'eglot)
 
 (define-derived-mode genehack-vue-mode web-mode "ghVue"
   "A major mode derived from web-mode, for editing .vue files with LSP support.")
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . genehack-vue-mode))
-(add-hook 'genehack-vue-mode-hook #'eglot-ensure)
+;; (add-hook 'genehack-vue-mode-hook #'eglot-ensure)
+
+(add-hook! genehack-vue-mode
+  (eglot-ensure)
+  (flycheck-add-mode 'javascript-eslint 'genehack-vue-mode)
+  (flycheck-select-checker 'javascript-eslint)
+  )
+
 (after! eglot
   (add-to-list 'eglot-server-programs '(genehack-vue-mode "vls")))
+
 ;; (after! evil-mode
 ;;   (defvar my/base16-colors base16-atelier-dune-colors)
 ;;   (setq evil-emacs-state-cursor   `(,(plist-get my/base16-colors :base0D) box)
