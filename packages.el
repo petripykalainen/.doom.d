@@ -52,3 +52,5 @@
 ;; (package! xah-fly-keys)
 ;; (package! humanoid-themes)
 (package! base16-theme)
+(package! tree-sitter)
+(package! tree-sitter-langs)

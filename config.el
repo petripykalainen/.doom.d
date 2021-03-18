@@ -95,6 +95,15 @@
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . genehack-vue-mode))
 ;; (add-hook 'genehack-vue-mode-hook #'eglot-ensure)
 
+(use-package! tree-sitter
+  :config
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+(add-hook! js2-mode
+  (flycheck-select-checker 'javascript-eslint))
+
 (add-hook! genehack-vue-mode
   (eglot-ensure)
   (flycheck-add-mode 'javascript-eslint 'genehack-vue-mode)
