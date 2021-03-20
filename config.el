@@ -101,13 +101,23 @@
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
-(add-hook! js2-mode
-  (flycheck-select-checker 'javascript-eslint))
+;; Toimii
+(setq-hook! 'js2-mode-hook flycheck-checker 'javascript-eslint)
+(setq-hook! 'typescript-mode-hook flycheck-checker 'javascript-eslint)
+
+;; https://github.com/hlissner/doom-emacs/issues/1530#issuecomment-725588733
+;; Doesn't quite work.
+;; (add-hook! 'lsp-after-initialize-hook
+;;   (run-hooks (intern (format "%s-lsp-hook" major-mode))))
+;; (defun go-flycheck-setup ()
+;;   (flycheck-add-next-checker 'lsp 'javascript-eslint))
+;; (add-hook 'js2-mode-hook
+;;           #'go-flycheck-setup)
 
 (add-hook! genehack-vue-mode
   (eglot-ensure)
   (flycheck-add-mode 'javascript-eslint 'genehack-vue-mode)
-  (flycheck-select-checker 'javascript-eslint)
+  ;; (flycheck-select-checker 'javascript-eslint)
   )
 
 (after! eglot
